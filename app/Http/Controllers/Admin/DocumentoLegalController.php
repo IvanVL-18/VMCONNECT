@@ -8,6 +8,7 @@ use App\Http\Requests\DocumentoLegalRequest;
 use App\Models\DocumentoLegal;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -123,7 +124,7 @@ class DocumentoLegalController extends Controller
         ])->save();
 
         if (filled($anterior) && $anterior !== $ruta) {
-            \Illuminate\Support\Facades\Storage::disk(config('isp.disco_documentos'))->delete($anterior);
+            Storage::disk(config('isp.disco_documentos'))->delete($anterior);
         }
     }
 

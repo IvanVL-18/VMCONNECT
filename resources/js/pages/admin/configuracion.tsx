@@ -37,6 +37,8 @@ type ConfiguracionEditable = {
     home_subtitulo: string | null;
     empresa_descripcion: string | null;
     planes_nota: string | null;
+    planes_nota_fibra: string | null;
+    planes_nota_antena: string | null;
 };
 
 type Errores = Record<string, string>;
@@ -395,9 +397,28 @@ export default function ConfiguracionPage({
                                     />
                                     <CampoArea
                                         nombre="planes_nota"
-                                        etiqueta="Nota sobre los paquetes"
+                                        etiqueta="Nota general sobre los paquetes"
                                         valor={configuracion.planes_nota}
-                                        ayuda="Aparece debajo de los paquetes, en la portada y en /paquetes. Por ejemplo, el costo de instalación."
+                                        ayuda="Aplica a todo el catálogo. Aparece en la portada y al final de /paquetes."
+                                        filas={3}
+                                        errores={errores}
+                                    />
+                                    {/* Cada red tiene condiciones de instalación
+                                        distintas, así que cada una lleva su
+                                        propia nota dentro de su pestaña. */}
+                                    <CampoArea
+                                        nombre="planes_nota_fibra"
+                                        etiqueta="Nota de los paquetes de fibra óptica"
+                                        valor={configuracion.planes_nota_fibra}
+                                        ayuda="Solo aparece en la pestaña de fibra. Por ejemplo, que no hay costo de instalación."
+                                        filas={3}
+                                        errores={errores}
+                                    />
+                                    <CampoArea
+                                        nombre="planes_nota_antena"
+                                        etiqueta="Nota de los paquetes de antena"
+                                        valor={configuracion.planes_nota_antena}
+                                        ayuda="Solo aparece en la pestaña de antena. Por ejemplo, el costo de instalación y el equipo en préstamo."
                                         filas={3}
                                         errores={errores}
                                     />

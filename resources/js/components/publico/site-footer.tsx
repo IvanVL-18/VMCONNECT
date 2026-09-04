@@ -1,6 +1,7 @@
 import { Link, usePage } from '@inertiajs/react';
 import { Facebook, Instagram, Mail, MapPin, MessageCircle, Phone, Clock } from 'lucide-react';
 import { Dato, ListaDatos } from '@/components/publico/dato';
+import { enlaceWhatsapp } from '@/lib/whatsapp';
 import type { PropsCompartidas } from '@/types/sitio';
 
 /**
@@ -18,11 +19,7 @@ export default function SiteFooter() {
     const redes = [
         { url: sitio?.facebook_url, icono: Facebook, etiqueta: 'Facebook' },
         { url: sitio?.instagram_url, icono: Instagram, etiqueta: 'Instagram' },
-        {
-            url: sitio?.whatsapp ? `https://wa.me/${sitio.whatsapp.replace(/\D/g, '')}` : null,
-            icono: MessageCircle,
-            etiqueta: 'WhatsApp',
-        },
+        { url: enlaceWhatsapp(sitio?.whatsapp), icono: MessageCircle, etiqueta: 'WhatsApp' },
     ].filter((red) => Boolean(red.url));
 
     return (

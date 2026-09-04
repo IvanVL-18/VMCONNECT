@@ -11,10 +11,14 @@ import type { PropsCompartidas } from '@/types/sitio';
 type PlanFila = {
     id: number;
     nombre: string;
+    tecnologia: string;
+    tecnologia_etiqueta: string;
     velocidad_bajada: number;
     velocidad_subida: number | null;
     precio_mensual: number;
     moneda: string;
+    incluye_tv: boolean;
+    incluye_camara: boolean;
     folio_tarifa: string | null;
     destacado: boolean;
     activo: boolean;
@@ -68,7 +72,9 @@ export default function PlanesIndex({ planes }: { planes: PlanFila[] }) {
                                 <tr>
                                     <th scope="col" className="px-4 py-3 text-left font-semibold">Orden</th>
                                     <th scope="col" className="px-4 py-3 text-left font-semibold">Nombre</th>
+                                    <th scope="col" className="px-4 py-3 text-left font-semibold">Tecnología</th>
                                     <th scope="col" className="px-4 py-3 text-left font-semibold">Velocidades</th>
+                                    <th scope="col" className="px-4 py-3 text-left font-semibold">Incluye</th>
                                     <th scope="col" className="px-4 py-3 text-left font-semibold">Precio</th>
                                     <th scope="col" className="px-4 py-3 text-left font-semibold">Folio IFT</th>
                                     <th scope="col" className="px-4 py-3 text-left font-semibold">Estado</th>
@@ -88,11 +94,22 @@ export default function PlanesIndex({ planes }: { planes: PlanFila[] }) {
                                             )}
                                         </td>
                                         <td className="text-muted-foreground px-4 py-3 whitespace-nowrap">
+                                            {plan.tecnologia_etiqueta}
+                                        </td>
+                                        <td className="text-muted-foreground px-4 py-3 whitespace-nowrap">
                                             {plan.velocidad_bajada}
                                             {plan.velocidad_subida !== null
                                                 ? ` / ${plan.velocidad_subida}`
                                                 : ''}{' '}
                                             Mbps
+                                        </td>
+                                        <td className="text-muted-foreground px-4 py-3 whitespace-nowrap">
+                                            {[
+                                                plan.incluye_tv && 'TV',
+                                                plan.incluye_camara && 'Cámara',
+                                            ]
+                                                .filter(Boolean)
+                                                .join(' · ') || '—'}
                                         </td>
                                         <td className="px-4 py-3 whitespace-nowrap">
                                             {formatoPrecio(plan.precio_mensual, plan.moneda)}

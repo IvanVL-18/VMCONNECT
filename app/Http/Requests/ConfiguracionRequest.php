@@ -60,6 +60,8 @@ class ConfiguracionRequest extends FormRequest
             'home_subtitulo' => ['nullable', 'string', 'max:1000'],
             'empresa_descripcion' => ['nullable', 'string', 'max:5000'],
             'planes_nota' => ['nullable', 'string', 'max:2000'],
+            'planes_nota_fibra' => ['nullable', 'string', 'max:2000'],
+            'planes_nota_antena' => ['nullable', 'string', 'max:2000'],
         ];
     }
 
@@ -93,7 +95,9 @@ class ConfiguracionRequest extends FormRequest
             'home_titulo' => 'título de la página de inicio',
             'home_subtitulo' => 'texto de apoyo de la página de inicio',
             'empresa_descripcion' => 'descripción de la empresa',
-            'planes_nota' => 'nota sobre los paquetes',
+            'planes_nota' => 'nota general sobre los paquetes',
+            'planes_nota_fibra' => 'nota de los paquetes de fibra',
+            'planes_nota_antena' => 'nota de los paquetes de antena',
         ];
     }
 

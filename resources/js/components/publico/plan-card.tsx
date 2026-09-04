@@ -1,4 +1,4 @@
-import { ArrowDownToLine, ArrowUpFromLine, Check } from 'lucide-react';
+import { Antenna, ArrowDownToLine, ArrowUpFromLine, Cable, Cctv, Check, Tv } from 'lucide-react';
 import { Dato } from '@/components/publico/dato';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
@@ -25,17 +25,33 @@ export function formatoPrecio(monto: number, moneda: string): string {
  * la tarifa inscrita en el IFT (requisito 13), que es como debe presentarse en
  * la página de paquetes.
  *
+ * `mostrarTecnologia` se usa donde conviven paquetes de las dos redes (la
+ * portada): los nombres comerciales se repiten entre fibra y antena, así que
+ * sin la etiqueta habría dos «Básico» al mismo precio y con distinta velocidad.
+ * Dentro de la página de paquetes va apagado porque la pestaña ya lo dice.
+ *
  * `indice` sirve para escalonar la animación de entrada de la lista.
  */
 export default function PlanCard({
     plan,
     detallado = false,
+    mostrarTecnologia = false,
     indice = 0,
 }: {
     plan: PlanPublico;
     detallado?: boolean;
+    mostrarTecnologia?: boolean;
     indice?: number;
 }) {
+    const IconoTecnologia = plan.tecnologia === 'fibra' ? Cable : Antenna;
+
+    // Los servicios incluidos se marcan con icono, igual que en el material
+    // comercial de la empresa.
+    const incluidos = [
+        plan.incluye_tv && { icono: Tv, etiqueta: 'Incluye televisión' },
+        plan.incluye_camara && { icono: Cctv, etiqueta: 'Incluye cámara de seguridad' },
+    ].filter((incluido) => incluido !== false) as { icono: typeof Tv; etiqueta: string }[];
+
     return (
         <article
             className={cn(
@@ -51,6 +67,13 @@ export default function PlanCard({
                     <h3 className="text-lg font-semibold">{plan.nombre}</h3>
                     {plan.destacado && <Badge>Destacado</Badge>}
                 </div>
+
+                {mostrarTecnologia && (
+                    <p className="text-muted-foreground mt-1.5 flex items-center gap-1.5 text-xs">
+                        <IconoTecnologia className="size-3.5" aria-hidden="true" />
+                        {plan.tecnologia_etiqueta}
+                    </p>
+                )}
 
                 <p className="mt-4 flex items-baseline gap-1.5">
                     <span className="text-primary text-4xl font-bold tracking-tight">
@@ -84,6 +107,19 @@ export default function PlanCard({
                     </div>
                 )}
             </dl>
+
+            {incluidos.length > 0 && (
+                <ul className="mt-4 flex flex-wrap gap-2">
+                    {incluidos.map((incluido) => (
+                        <li key={incluido.etiqueta}>
+                            <Badge variant="secondary" className="gap-1.5 font-normal">
+                                <incluido.icono className="size-3.5" aria-hidden="true" />
+                                {incluido.etiqueta}
+                            </Badge>
+                        </li>
+                    ))}
+                </ul>
+            )}
 
             {plan.caracteristicas.length > 0 && (
                 <ul className="mt-5 space-y-2.5 text-sm">

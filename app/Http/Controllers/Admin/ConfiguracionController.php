@@ -45,6 +45,8 @@ class ConfiguracionController extends Controller
                 'home_subtitulo',
                 'empresa_descripcion',
                 'planes_nota',
+                'planes_nota_fibra',
+                'planes_nota_antena',
             ]),
         ]);
     }

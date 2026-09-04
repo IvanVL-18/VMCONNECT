@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\TipoDocumento;
+use Database\Factories\DocumentoLegalFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 class DocumentoLegal extends Model
 {
-    /** @use HasFactory<\Database\Factories\DocumentoLegalFactory> */
+    /** @use HasFactory<DocumentoLegalFactory> */
     use HasFactory;
 
     protected $table = 'documentos_legales';

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\Tecnologia;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PlanRequest;
 use App\Models\Plan;
@@ -18,15 +19,20 @@ class PlanController extends Controller
     public function index(): Response
     {
         $planes = Plan::query()
+            ->orderBy('tecnologia')
             ->ordenados()
             ->get()
             ->map(fn (Plan $plan) => [
                 'id' => $plan->id,
                 'nombre' => $plan->nombre,
+                'tecnologia' => $plan->tecnologia->value,
+                'tecnologia_etiqueta' => $plan->tecnologia->etiqueta(),
                 'velocidad_bajada' => $plan->velocidad_bajada,
                 'velocidad_subida' => $plan->velocidad_subida,
                 'precio_mensual' => (float) $plan->precio_mensual,
                 'moneda' => $plan->moneda,
+                'incluye_tv' => $plan->incluye_tv,
+                'incluye_camara' => $plan->incluye_camara,
                 'folio_tarifa' => $plan->folio_tarifa,
                 'destacado' => $plan->destacado,
                 'activo' => $plan->activo,
@@ -43,6 +49,7 @@ class PlanController extends Controller
     {
         return Inertia::render('admin/planes/form', [
             'plan' => null,
+            'tecnologias' => Tecnologia::paraSelect(),
             'siguienteOrden' => (int) Plan::query()->max('orden') + 1,
         ]);
     }
@@ -66,17 +73,21 @@ class PlanController extends Controller
             'plan' => [
                 'id' => $plan->id,
                 'nombre' => $plan->nombre,
+                'tecnologia' => $plan->tecnologia->value,
                 'velocidad_bajada' => $plan->velocidad_bajada,
                 'velocidad_subida' => $plan->velocidad_subida,
                 'precio_mensual' => (float) $plan->precio_mensual,
                 'moneda' => $plan->moneda,
                 'caracteristicas' => $plan->caracteristicas ?? [],
+                'incluye_tv' => $plan->incluye_tv,
+                'incluye_camara' => $plan->incluye_camara,
                 'restricciones' => $plan->restricciones,
                 'folio_tarifa' => $plan->folio_tarifa,
                 'destacado' => $plan->destacado,
                 'activo' => $plan->activo,
                 'orden' => $plan->orden,
             ],
+            'tecnologias' => Tecnologia::paraSelect(),
             'siguienteOrden' => $plan->orden,
         ]);
     }

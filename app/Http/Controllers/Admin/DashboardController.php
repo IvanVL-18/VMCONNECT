@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Configuracion;
 use App\Models\DocumentoLegal;
 use App\Models\Plan;
+use Illuminate\Database\Eloquent\Collection;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -30,7 +31,7 @@ class DashboardController extends Controller
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Collection<int, DocumentoLegal>  $documentos
+     * @param  Collection<int, DocumentoLegal>  $documentos
      * @return array<int, array{tipo: string, detalle: string}>
      */
     private function pendientes($documentos, Configuracion $configuracion): array

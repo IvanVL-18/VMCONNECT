@@ -92,7 +92,15 @@ export default function Home({
 
                     <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                         {planes.map((plan, indice) => (
-                            <PlanCard key={plan.id} plan={plan} indice={indice} />
+                            /* Aquí conviven paquetes de fibra y de antena, y los
+                               nombres comerciales se repiten entre ambas redes,
+                               así que cada ficha declara su tecnología. */
+                            <PlanCard
+                                key={plan.id}
+                                plan={plan}
+                                indice={indice}
+                                mostrarTecnologia
+                            />
                         ))}
                     </div>
 

@@ -29,7 +29,7 @@ class ConfiguracionTest extends TestCase
                 'correo_facturacion' => 'facturacion@ejemplo.mx',
                 'servicios_ofrecidos' => "Internet fijo\nTelefonía",
                 'medios_pago' => "Efectivo\nTransferencia",
-                'contratacion_requisitos' => "Identificación oficial",
+                'contratacion_requisitos' => 'Identificación oficial',
             ])
             ->assertRedirect(route('admin.configuracion.edit'));
 

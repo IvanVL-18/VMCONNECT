@@ -21,6 +21,7 @@ class PlanCrudTest extends TestCase
     {
         return array_merge([
             'nombre' => 'Plan Hogar 100',
+            'tecnologia' => 'fibra',
             'velocidad_bajada' => 100,
             'velocidad_subida' => 20,
             'precio_mensual' => 599.00,

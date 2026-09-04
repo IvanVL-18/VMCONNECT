@@ -9,11 +9,14 @@ import { Spinner } from '@/components/ui/spinner';
 type PlanEditable = {
     id: number;
     nombre: string;
+    tecnologia: string;
     velocidad_bajada: number;
     velocidad_subida: number | null;
     precio_mensual: number;
     moneda: string;
     caracteristicas: string[];
+    incluye_tv: boolean;
+    incluye_camara: boolean;
     restricciones: string | null;
     folio_tarifa: string | null;
     destacado: boolean;
@@ -21,11 +24,15 @@ type PlanEditable = {
     orden: number;
 };
 
+type TecnologiaOpcion = { value: string; label: string };
+
 export default function PlanForm({
     plan,
+    tecnologias,
     siguienteOrden,
 }: {
     plan: PlanEditable | null;
+    tecnologias: TecnologiaOpcion[];
     siguienteOrden: number;
 }) {
     const editando = plan !== null;
@@ -62,6 +69,31 @@ export default function PlanForm({
                                     placeholder="Plan Hogar 50"
                                 />
                                 <InputError message={errors.nombre} />
+                            </div>
+
+                            <div className="grid gap-2">
+                                <Label htmlFor="tecnologia">Tecnología</Label>
+                                <select
+                                    id="tecnologia"
+                                    name="tecnologia"
+                                    required
+                                    defaultValue={plan?.tecnologia ?? ''}
+                                    className="border-input bg-background focus-visible:ring-ring w-full rounded-md border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:outline-none"
+                                >
+                                    <option value="" disabled>
+                                        Selecciona una tecnología
+                                    </option>
+                                    {tecnologias.map((tecnologia) => (
+                                        <option key={tecnologia.value} value={tecnologia.value}>
+                                            {tecnologia.label}
+                                        </option>
+                                    ))}
+                                </select>
+                                <p className="text-muted-foreground text-xs">
+                                    Los nombres comerciales se repiten entre las dos redes, así que
+                                    esto es lo que separa un paquete de otro en el sitio.
+                                </p>
+                                <InputError message={errors.tecnologia} />
                             </div>
 
                             <div className="grid gap-4 sm:grid-cols-2">
@@ -187,6 +219,30 @@ export default function PlanForm({
                             </div>
 
                             <div className="space-y-3">
+                                {/* Servicios incluidos: el sitio los marca con
+                                    un icono en la ficha del paquete. */}
+                                <div className="flex items-center gap-3">
+                                    <Checkbox
+                                        id="incluye_tv"
+                                        name="incluye_tv"
+                                        value="1"
+                                        defaultChecked={plan?.incluye_tv ?? false}
+                                    />
+                                    <Label htmlFor="incluye_tv">Incluye televisión</Label>
+                                </div>
+
+                                <div className="flex items-center gap-3">
+                                    <Checkbox
+                                        id="incluye_camara"
+                                        name="incluye_camara"
+                                        value="1"
+                                        defaultChecked={plan?.incluye_camara ?? false}
+                                    />
+                                    <Label htmlFor="incluye_camara">
+                                        Incluye cámara de seguridad
+                                    </Label>
+                                </div>
+
                                 <div className="flex items-center gap-3">
                                     {/* Si la casilla va desmarcada el campo no
                                         se envía, y el FormRequest lo resuelve
