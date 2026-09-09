@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\Tecnologia;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PlanRequest extends FormRequest
 {
@@ -17,12 +19,15 @@ class PlanRequest extends FormRequest
     {
         return [
             'nombre' => ['required', 'string', 'max:255'],
+            'tecnologia' => ['required', Rule::enum(Tecnologia::class)],
             'velocidad_bajada' => ['required', 'integer', 'min:1', 'max:100000'],
             'velocidad_subida' => ['nullable', 'integer', 'min:1', 'max:100000'],
             'precio_mensual' => ['required', 'numeric', 'min:0', 'max:9999999.99'],
             'moneda' => ['required', 'string', 'size:3'],
             'caracteristicas' => ['nullable', 'array'],
             'caracteristicas.*' => ['string', 'max:255'],
+            'incluye_tv' => ['boolean'],
+            'incluye_camara' => ['boolean'],
             'restricciones' => ['nullable', 'string', 'max:5000'],
             'folio_tarifa' => ['nullable', 'string', 'max:255'],
             'destacado' => ['boolean'],
@@ -36,11 +41,14 @@ class PlanRequest extends FormRequest
     {
         return [
             'nombre' => 'nombre del paquete',
+            'tecnologia' => 'tecnología',
             'velocidad_bajada' => 'velocidad de bajada',
             'velocidad_subida' => 'velocidad de subida',
             'precio_mensual' => 'precio mensual',
             'moneda' => 'moneda',
             'caracteristicas' => 'características',
+            'incluye_tv' => 'servicio de televisión',
+            'incluye_camara' => 'cámara de seguridad',
             'restricciones' => 'restricciones',
             'folio_tarifa' => 'folio de tarifa',
             'orden' => 'orden de despliegue',
@@ -65,6 +73,8 @@ class PlanRequest extends FormRequest
 
         $this->merge([
             'caracteristicas' => $caracteristicas ?? [],
+            'incluye_tv' => $this->boolean('incluye_tv'),
+            'incluye_camara' => $this->boolean('incluye_camara'),
             'destacado' => $this->boolean('destacado'),
             'activo' => $this->boolean('activo'),
             'moneda' => strtoupper((string) $this->input('moneda', 'MXN')),

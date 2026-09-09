@@ -1,4 +1,12 @@
-import { ArrowDownToLine, ArrowUpFromLine, Check } from 'lucide-react';
+import {
+    Antenna,
+    ArrowDownToLine,
+    ArrowUpFromLine,
+    Cable,
+    Cctv,
+    Check,
+    Tv,
+} from 'lucide-react';
 import { Dato } from '@/components/publico/dato';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
@@ -25,17 +33,39 @@ export function formatoPrecio(monto: number, moneda: string): string {
  * la tarifa inscrita en el IFT (requisito 13), que es como debe presentarse en
  * la página de paquetes.
  *
+ * `mostrarTecnologia` se usa donde conviven paquetes de las dos redes (la
+ * portada): los nombres comerciales se repiten entre fibra y antena, así que
+ * sin la etiqueta habría dos «Básico» al mismo precio y con distinta velocidad.
+ * Dentro de la página de paquetes va apagado porque la pestaña ya lo dice.
+ *
  * `indice` sirve para escalonar la animación de entrada de la lista.
  */
 export default function PlanCard({
     plan,
     detallado = false,
+    mostrarTecnologia = false,
     indice = 0,
 }: {
     plan: PlanPublico;
     detallado?: boolean;
+    mostrarTecnologia?: boolean;
     indice?: number;
 }) {
+    const IconoTecnologia = plan.tecnologia === 'fibra' ? Cable : Antenna;
+
+    // Los servicios incluidos se marcan con icono, igual que en el material
+    // comercial de la empresa.
+    const incluidos = [
+        plan.incluye_tv && { icono: Tv, etiqueta: 'Incluye televisión' },
+        plan.incluye_camara && {
+            icono: Cctv,
+            etiqueta: 'Incluye cámara de seguridad',
+        },
+    ].filter((incluido) => incluido !== false) as {
+        icono: typeof Tv;
+        etiqueta: string;
+    }[];
+
     return (
         <article
             className={cn(
@@ -44,13 +74,25 @@ export default function PlanCard({
                     ? 'border-primary/50 shadow-primary/10 shadow-lg'
                     : 'shadow-sm',
             )}
-            style={{ '--vm-retraso': `${indice * 70}ms` } as React.CSSProperties}
+            style={
+                { '--vm-retraso': `${indice * 70}ms` } as React.CSSProperties
+            }
         >
             <header>
                 <div className="flex items-start justify-between gap-3">
                     <h3 className="text-lg font-semibold">{plan.nombre}</h3>
                     {plan.destacado && <Badge>Destacado</Badge>}
                 </div>
+
+                {mostrarTecnologia && (
+                    <p className="text-muted-foreground mt-1.5 flex items-center gap-1.5 text-xs">
+                        <IconoTecnologia
+                            className="size-3.5"
+                            aria-hidden="true"
+                        />
+                        {plan.tecnologia_etiqueta}
+                    </p>
+                )}
 
                 <p className="mt-4 flex items-baseline gap-1.5">
                     <span className="text-primary text-4xl font-bold tracking-tight">
@@ -63,13 +105,23 @@ export default function PlanCard({
                 </p>
             </header>
 
-            <dl className={cn('mt-5 grid gap-3', plan.velocidad_subida ? 'grid-cols-2' : 'grid-cols-1')}>
+            <dl
+                className={cn(
+                    'mt-5 grid gap-3',
+                    plan.velocidad_subida ? 'grid-cols-2' : 'grid-cols-1',
+                )}
+            >
                 <div className="bg-accent/60 rounded-xl p-3">
                     <dt className="text-accent-foreground/70 flex items-center gap-1.5 text-xs">
-                        <ArrowDownToLine className="size-3.5" aria-hidden="true" />
+                        <ArrowDownToLine
+                            className="size-3.5"
+                            aria-hidden="true"
+                        />
                         Descarga
                     </dt>
-                    <dd className="mt-1 font-semibold">hasta {plan.velocidad_bajada} Mbps</dd>
+                    <dd className="mt-1 font-semibold">
+                        hasta {plan.velocidad_bajada} Mbps
+                    </dd>
                 </div>
 
                 {/* La velocidad de subida solo aparece si está capturada: no se
@@ -77,18 +129,45 @@ export default function PlanCard({
                 {plan.velocidad_subida !== null && (
                     <div className="bg-accent/60 rounded-xl p-3">
                         <dt className="text-accent-foreground/70 flex items-center gap-1.5 text-xs">
-                            <ArrowUpFromLine className="size-3.5" aria-hidden="true" />
+                            <ArrowUpFromLine
+                                className="size-3.5"
+                                aria-hidden="true"
+                            />
                             Carga
                         </dt>
-                        <dd className="mt-1 font-semibold">hasta {plan.velocidad_subida} Mbps</dd>
+                        <dd className="mt-1 font-semibold">
+                            hasta {plan.velocidad_subida} Mbps
+                        </dd>
                     </div>
                 )}
             </dl>
 
+            {incluidos.length > 0 && (
+                <ul className="mt-4 flex flex-wrap gap-2">
+                    {incluidos.map((incluido) => (
+                        <li key={incluido.etiqueta}>
+                            <Badge
+                                variant="secondary"
+                                className="gap-1.5 font-normal"
+                            >
+                                <incluido.icono
+                                    className="size-3.5"
+                                    aria-hidden="true"
+                                />
+                                {incluido.etiqueta}
+                            </Badge>
+                        </li>
+                    ))}
+                </ul>
+            )}
+
             {plan.caracteristicas.length > 0 && (
                 <ul className="mt-5 space-y-2.5 text-sm">
                     {plan.caracteristicas.map((caracteristica, i) => (
-                        <li key={`${caracteristica}-${i}`} className="flex gap-2.5">
+                        <li
+                            key={`${caracteristica}-${i}`}
+                            className="flex gap-2.5"
+                        >
                             <span className="bg-primary/10 text-primary mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full">
                                 <Check className="size-3" aria-hidden="true" />
                             </span>
@@ -106,7 +185,10 @@ export default function PlanCard({
                             Restricciones
                         </h4>
                         <div className="mt-1">
-                            <Dato valor={plan.restricciones} vacio="Sin restricciones capturadas" />
+                            <Dato
+                                valor={plan.restricciones}
+                                vacio="Sin restricciones capturadas"
+                            />
                         </div>
                     </div>
 
@@ -116,7 +198,10 @@ export default function PlanCard({
                             Folio de tarifa registrada ante el IFT
                         </h4>
                         <div className="mt-1">
-                            <Dato valor={plan.folio_tarifa} vacio="Folio pendiente de captura" />
+                            <Dato
+                                valor={plan.folio_tarifa}
+                                vacio="Folio pendiente de captura"
+                            />
                         </div>
                     </div>
                 </div>

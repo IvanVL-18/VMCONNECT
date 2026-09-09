@@ -37,6 +37,8 @@ type ConfiguracionEditable = {
     home_subtitulo: string | null;
     empresa_descripcion: string | null;
     planes_nota: string | null;
+    planes_nota_fibra: string | null;
+    planes_nota_antena: string | null;
 };
 
 type Errores = Record<string, string>;
@@ -62,7 +64,12 @@ function CampoTexto({
     return (
         <div className="grid gap-2">
             <Label htmlFor={nombre}>{etiqueta}</Label>
-            <Input id={nombre} name={nombre} type={tipo} defaultValue={valor ?? ''} />
+            <Input
+                id={nombre}
+                name={nombre}
+                type={tipo}
+                defaultValue={valor ?? ''}
+            />
             {ayuda && <p className="text-muted-foreground text-xs">{ayuda}</p>}
             <InputError message={errores[nombre]} />
         </div>
@@ -121,10 +128,37 @@ function CampoLista({
                 defaultValue={(valores ?? []).join('\n')}
                 className={claseTextarea}
             />
-            <p className="text-muted-foreground text-xs">Un elemento por línea.</p>
+            <p className="text-muted-foreground text-xs">
+                Un elemento por línea.
+            </p>
             <InputError message={errores[nombre]} />
         </div>
     );
+}
+
+/**
+ * El formulario guarda toda la configuracion de una sola vez, asi que un campo
+ * invalido cancela el guardado completo. Sin este aviso el error solo se veia
+ * junto al campo culpable, que casi siempre queda fuera de la pantalla, y el
+ * boton parecia no hacer nada.
+ */
+function AvisoErrores({ errores }: { errores: Errores }) {
+    const nombres = Object.keys(errores);
+    const primero = nombres[0];
+
+    useEffect(() => {
+        if (!primero) {
+            return;
+        }
+
+        toast.error('No se guardó: revisa los campos marcados en rojo.');
+
+        document
+            .getElementById(primero)
+            ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, [primero, nombres.length]);
+
+    return null;
 }
 
 function Seccion({
@@ -139,7 +173,11 @@ function Seccion({
     return (
         <section className="bg-card rounded-xl border p-6">
             <h2 className="font-semibold">{titulo}</h2>
-            {descripcion && <p className="text-muted-foreground mt-1 text-sm">{descripcion}</p>}
+            {descripcion && (
+                <p className="text-muted-foreground mt-1 text-sm">
+                    {descripcion}
+                </p>
+            )}
             <div className="mt-5 space-y-5">{children}</div>
         </section>
     );
@@ -164,22 +202,31 @@ export default function ConfiguracionPage({
 
             <div className="flex flex-col gap-6 p-4">
                 <div>
-                    <h1 className="text-xl font-semibold">Configuración del sitio</h1>
+                    <h1 className="text-xl font-semibold">
+                        Configuración del sitio
+                    </h1>
                     <p className="text-muted-foreground mt-1 text-sm">
-                        Datos de contacto, textos y contenidos que la normativa obliga a publicar.
+                        Datos de contacto, textos y contenidos que la normativa
+                        obliga a publicar.
                     </p>
                 </div>
 
+                {/* `noValidate`: la validacion la hace el servidor, que responde en
+                    espanol y marca cada campo. La del navegador solo mostraba un
+                    globo sobre un campo que casi siempre quedaba fuera de la vista. */}
                 <Form
                     action="/admin/configuracion"
                     method="put"
                     className="max-w-3xl space-y-6"
+                    noValidate
                 >
                     {({ processing, errors }) => {
                         const errores = errors as Errores;
 
                         return (
                             <>
+                                <AvisoErrores errores={errores} />
+
                                 <Seccion
                                     titulo="Identidad y contacto"
                                     descripcion="Se muestran en el pie de página de todo el sitio."
@@ -237,6 +284,7 @@ export default function ConfiguracionPage({
                                         etiqueta="URL de Facebook"
                                         tipo="url"
                                         valor={configuracion.facebook_url}
+                                        ayuda="Puedes pegarla sin https://, por ejemplo facebook.com/vmmax"
                                         errores={errores}
                                     />
                                     <CampoTexto
@@ -244,6 +292,7 @@ export default function ConfiguracionPage({
                                         etiqueta="URL de Instagram"
                                         tipo="url"
                                         valor={configuracion.instagram_url}
+                                        ayuda="Puedes pegarla sin https://, por ejemplo instagram.com/vmmax"
                                         errores={errores}
                                     />
                                     <CampoTexto
@@ -262,7 +311,9 @@ export default function ConfiguracionPage({
                                     <CampoLista
                                         nombre="servicios_ofrecidos"
                                         etiqueta="Servicios"
-                                        valores={configuracion.servicios_ofrecidos}
+                                        valores={
+                                            configuracion.servicios_ofrecidos
+                                        }
                                         errores={errores}
                                     />
                                 </Seccion>
@@ -293,14 +344,18 @@ export default function ConfiguracionPage({
                                     <CampoArea
                                         nombre="contratacion_procedimiento"
                                         etiqueta="Procedimiento de contratación"
-                                        valor={configuracion.contratacion_procedimiento}
+                                        valor={
+                                            configuracion.contratacion_procedimiento
+                                        }
                                         filas={5}
                                         errores={errores}
                                     />
                                     <CampoLista
                                         nombre="contratacion_requisitos"
                                         etiqueta="Requisitos"
-                                        valores={configuracion.contratacion_requisitos}
+                                        valores={
+                                            configuracion.contratacion_requisitos
+                                        }
                                         errores={errores}
                                     />
                                     <CampoArea
@@ -313,7 +368,9 @@ export default function ConfiguracionPage({
                                     <CampoTexto
                                         nombre="contratacion_horario"
                                         etiqueta="Horario de contratación"
-                                        valor={configuracion.contratacion_horario}
+                                        valor={
+                                            configuracion.contratacion_horario
+                                        }
                                         errores={errores}
                                     />
                                 </Seccion>
@@ -325,7 +382,9 @@ export default function ConfiguracionPage({
                                     <CampoArea
                                         nombre="quejas_procedimiento"
                                         etiqueta="Cómo se presenta una queja"
-                                        valor={configuracion.quejas_procedimiento}
+                                        valor={
+                                            configuracion.quejas_procedimiento
+                                        }
                                         filas={5}
                                         errores={errores}
                                     />
@@ -358,13 +417,17 @@ export default function ConfiguracionPage({
                                     <CampoTexto
                                         nombre="quejas_tiempo_promedio"
                                         etiqueta="Tiempo promedio de resolución"
-                                        valor={configuracion.quejas_tiempo_promedio}
+                                        valor={
+                                            configuracion.quejas_tiempo_promedio
+                                        }
                                         errores={errores}
                                     />
                                     <CampoTexto
                                         nombre="quejas_tiempo_maximo"
                                         etiqueta="Tiempo máximo de resolución"
-                                        valor={configuracion.quejas_tiempo_maximo}
+                                        valor={
+                                            configuracion.quejas_tiempo_maximo
+                                        }
                                         errores={errores}
                                     />
                                 </Seccion>
@@ -389,15 +452,36 @@ export default function ConfiguracionPage({
                                     <CampoArea
                                         nombre="empresa_descripcion"
                                         etiqueta="Descripción de la empresa"
-                                        valor={configuracion.empresa_descripcion}
+                                        valor={
+                                            configuracion.empresa_descripcion
+                                        }
                                         filas={5}
                                         errores={errores}
                                     />
                                     <CampoArea
                                         nombre="planes_nota"
-                                        etiqueta="Nota sobre los paquetes"
+                                        etiqueta="Nota general sobre los paquetes"
                                         valor={configuracion.planes_nota}
-                                        ayuda="Aparece debajo de los paquetes, en la portada y en /paquetes. Por ejemplo, el costo de instalación."
+                                        ayuda="Aplica a todo el catálogo. Aparece en la portada y al final de /paquetes."
+                                        filas={3}
+                                        errores={errores}
+                                    />
+                                    {/* Cada red tiene condiciones de instalación
+                                        distintas, así que cada una lleva su
+                                        propia nota dentro de su pestaña. */}
+                                    <CampoArea
+                                        nombre="planes_nota_fibra"
+                                        etiqueta="Nota de los paquetes de fibra óptica"
+                                        valor={configuracion.planes_nota_fibra}
+                                        ayuda="Solo aparece en la pestaña de fibra. Por ejemplo, que no hay costo de instalación."
+                                        filas={3}
+                                        errores={errores}
+                                    />
+                                    <CampoArea
+                                        nombre="planes_nota_antena"
+                                        etiqueta="Nota de los paquetes de antena"
+                                        valor={configuracion.planes_nota_antena}
+                                        ayuda="Solo aparece en la pestaña de antena. Por ejemplo, el costo de instalación y el equipo en préstamo."
                                         filas={3}
                                         errores={errores}
                                     />

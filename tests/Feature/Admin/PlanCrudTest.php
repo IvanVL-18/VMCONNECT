@@ -21,6 +21,7 @@ class PlanCrudTest extends TestCase
     {
         return array_merge([
             'nombre' => 'Plan Hogar 100',
+            'tecnologia' => 'fibra',
             'velocidad_bajada' => 100,
             'velocidad_subida' => 20,
             'precio_mensual' => 599.00,
@@ -103,7 +104,7 @@ class PlanCrudTest extends TestCase
     }
 
     /**
-     * La velocidad de subida es opcional: el material comercial de VM Connect
+     * La velocidad de subida es opcional: el material comercial de VM MAX
      * solo publica la de descarga, y no se inventa el dato que falta.
      */
     public function test_se_puede_guardar_un_paquete_sin_velocidad_de_subida(): void

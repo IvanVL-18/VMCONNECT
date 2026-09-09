@@ -1,35 +1,20 @@
 import { usePage } from '@inertiajs/react';
-import { useEffect } from 'react';
 import SiteFooter from '@/components/publico/site-footer';
 import SiteHeader from '@/components/publico/site-header';
 
 /**
  * Envoltura de todas las páginas del sitio público.
  *
- * La clase `sitio-publico` trae la paleta de marca en claro (ver app.css). Se
- * aplica sobre un contenedor y no sobre <html>, así que gana sobre el tema
- * oscuro del panel sin necesidad de coordinar los dos.
+ * La clase `sitio-publico` trae la paleta de marca (ver app.css). Se aplica
+ * sobre un contenedor y no sobre <html>, así que solo pinta el sitio público
+ * y deja intacta la paleta neutra del panel de administración.
  */
-export default function PublicoLayout({ children }: { children: React.ReactNode }) {
+export default function PublicoLayout({
+    children,
+}: {
+    children: React.ReactNode;
+}) {
     const { url } = usePage();
-
-    // El fondo de <html> lo pinta el panel según el tema elegido. Mientras se
-    // esté viendo el sitio público lo dejamos en claro, para que al hacer
-    // scroll de más no asome una franja oscura detrás del contenido.
-    useEffect(() => {
-        const raiz = document.documentElement;
-        const teniaOscuro = raiz.classList.contains('dark');
-
-        raiz.classList.remove('dark');
-        raiz.style.colorScheme = 'light';
-
-        return () => {
-            if (teniaOscuro) {
-                raiz.classList.add('dark');
-                raiz.style.colorScheme = 'dark';
-            }
-        };
-    }, []);
 
     return (
         <div className="sitio-publico flex min-h-screen flex-col">

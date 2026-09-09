@@ -8,8 +8,8 @@ use Illuminate\Database\Seeder;
 /**
  * Configuracion del sitio.
  *
- * Se capturan los datos que VM Connect ya publica en su material comercial
- * (marca, medios de pago, nota de instalacion). Todo lo demas queda como
+ * Se capturan los datos que VM MAX ya publica en su material comercial
+ * (marca, medios de pago, notas de instalacion). Todo lo demas queda como
  * "[POR DEFINIR: ...]" a proposito: la normativa (PROFECO) sanciona la
  * publicidad enganosa, asi que ningun texto promocional ni dato de contacto se
  * inventa aqui. Lo captura el cliente desde /admin/configuracion.
@@ -21,29 +21,37 @@ class ConfiguracionSeeder extends Seeder
         $configuracion = Configuracion::query()->firstOrCreate([]);
 
         $configuracion->fill([
-            'marca_comercial' => 'VM Connect',
+            'marca_comercial' => 'VM MAX',
             'razon_social' => '[POR DEFINIR: razón social]',
             'domicilio_atencion' => '[POR DEFINIR: domicilio de la oficina de atención a clientes]',
             'horario_oficina' => '[POR DEFINIR: horario de oficina]',
             'telefono_atencion' => '[POR DEFINIR: teléfono]',
-            'correo_atencion' => '[POR DEFINIR: correo de atención]',
-            'correo_facturacion' => '[POR DEFINIR: correo de facturación]',
+            // Los campos de correo se quedan vacios y no con un marcador
+            // "[POR DEFINIR: ...]": el formulario los valida como correo, asi
+            // que un marcador de texto hace que toda la configuracion se
+            // rechace al guardar y nada mas se pueda editar hasta corregirlos.
+            'correo_atencion' => null,
+            'correo_facturacion' => null,
 
             'facebook_url' => null,
             'instagram_url' => null,
-            'whatsapp' => null,
+
+            // Numero que la empresa difunde en su material comercial. Es el
+            // canal por el que se atienden los pagos, asi que alimenta tanto el
+            // pie de pagina como el boton de /medios-de-pago.
+            'whatsapp' => '+52 1 771 811 5855',
 
             // Requisito 10: catalogo de tramites / servicios ofrecidos
             'servicios_ofrecidos' => [
-                'Servicio de acceso a Internet fijo inalámbrico',
+                'Servicio de acceso a Internet fijo por fibra óptica',
+                'Servicio de acceso a Internet fijo inalámbrico (antena)',
             ],
 
-            // Requisito 11: medios de pago. Tomados del material que la empresa
-            // ya difunde; faltan los demas por capturar.
+            // Requisito 11: medios de pago. La empresa no acepta tarjeta de
+            // credito, debito ni Visa: el pago se coordina por WhatsApp con
+            // atencion a clientes.
             'medios_pago' => [
-                'Pago en OXXO con número de tarjeta BBVA: 4152 3144 4308 5439',
-                'Pago en OXXO con número de tarjeta BBVA: 4152 3143 8131 5715',
-                '[POR DEFINIR: agregar los demás medios de pago]',
+                'Pago por WhatsApp con el área de atención a clientes',
             ],
             'medios_pago_nota' => 'Recuerda enviar tu comprobante de pago después de realizarlo.',
 
@@ -60,17 +68,24 @@ class ConfiguracionSeeder extends Seeder
             'quejas_procedimiento' => '[POR DEFINIR: describir cómo se presenta una queja]',
             'quejas_domicilio' => '[POR DEFINIR: domicilio para presentar quejas]',
             'quejas_telefono' => '[POR DEFINIR: teléfono de quejas]',
-            'quejas_correo' => '[POR DEFINIR: correo de quejas]',
+            'quejas_correo' => null,
             'quejas_horario' => '[POR DEFINIR: horario de atención de quejas]',
             'quejas_tiempo_promedio' => '[POR DEFINIR: tiempo promedio de resolución]',
             'quejas_tiempo_maximo' => '[POR DEFINIR: tiempo máximo de resolución]',
 
             // Textos del sitio publico. Solo se capturan los factuales; el resto
             // lo aprueba el cliente.
-            'home_titulo' => 'VM Connect',
-            'home_subtitulo' => 'Servicio de Internet fijo inalámbrico por antena.',
+            'home_titulo' => 'VM MAX',
+            'home_subtitulo' => 'Servicio de Internet fijo por fibra óptica y por antena.',
             'empresa_descripcion' => '[POR DEFINIR: descripción de la empresa]',
-            'planes_nota' => 'La instalación por antena tiene un costo de $500 e incluye el primer mes de servicio. El equipo se queda en préstamo.',
+
+            // Cada red tiene su propia condicion de instalacion, por eso la nota
+            // va separada: publicarlas juntas haria que una contradijera a la
+            // otra. La nota general queda vacia hasta que exista una condicion
+            // que aplique a todo el catalogo.
+            'planes_nota' => null,
+            'planes_nota_fibra' => 'Los paquetes de fibra óptica no tienen costo de instalación.',
+            'planes_nota_antena' => 'La instalación por antena tiene un costo de $500 e incluye el primer mes de servicio. El equipo se queda en préstamo.',
         ]);
 
         $configuracion->save();

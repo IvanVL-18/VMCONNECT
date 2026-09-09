@@ -43,19 +43,29 @@ export default function Home({
                         className="vm-entra max-w-3xl text-4xl font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl"
                         style={{ '--vm-retraso': '0ms' } as React.CSSProperties}
                     >
-                        <Dato valor={titulo} vacio="Título pendiente de captura" />
+                        <Dato
+                            valor={titulo}
+                            vacio="Título pendiente de captura"
+                        />
                     </h1>
 
                     <div
                         className="text-muted-foreground vm-entra mt-5 max-w-2xl text-lg"
-                        style={{ '--vm-retraso': '90ms' } as React.CSSProperties}
+                        style={
+                            { '--vm-retraso': '90ms' } as React.CSSProperties
+                        }
                     >
-                        <DatoBloque valor={subtitulo} vacio="Texto de apoyo pendiente de captura" />
+                        <DatoBloque
+                            valor={subtitulo}
+                            vacio="Texto de apoyo pendiente de captura"
+                        />
                     </div>
 
                     <div
                         className="vm-entra mt-9 flex flex-wrap gap-3"
-                        style={{ '--vm-retraso': '180ms' } as React.CSSProperties}
+                        style={
+                            { '--vm-retraso': '180ms' } as React.CSSProperties
+                        }
                     >
                         <Button asChild size="lg" className="rounded-full px-6">
                             <Link href="/contratacion">
@@ -63,7 +73,12 @@ export default function Home({
                                 <ArrowRight className="size-4" />
                             </Link>
                         </Button>
-                        <Button asChild variant="outline" size="lg" className="rounded-full px-6">
+                        <Button
+                            asChild
+                            variant="outline"
+                            size="lg"
+                            className="rounded-full px-6"
+                        >
                             <Link href="/paquetes">Ver paquetes y tarifas</Link>
                         </Button>
                     </div>
@@ -78,11 +93,15 @@ export default function Home({
                                 Nuestros paquetes
                             </h2>
                             <p className="text-muted-foreground mt-2">
-                                Consulta el detalle completo, restricciones y folios de tarifa en la
-                                página de paquetes.
+                                Consulta el detalle completo, restricciones y
+                                folios de tarifa en la página de paquetes.
                             </p>
                         </div>
-                        <Button asChild variant="outline" className="rounded-full">
+                        <Button
+                            asChild
+                            variant="outline"
+                            className="rounded-full"
+                        >
                             <Link href="/paquetes">
                                 Ver todos
                                 <ArrowRight className="size-4" />
@@ -92,7 +111,15 @@ export default function Home({
 
                     <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                         {planes.map((plan, indice) => (
-                            <PlanCard key={plan.id} plan={plan} indice={indice} />
+                            /* Aquí conviven paquetes de fibra y de antena, y los
+                               nombres comerciales se repiten entre ambas redes,
+                               así que cada ficha declara su tecnología. */
+                            <PlanCard
+                                key={plan.id}
+                                plan={plan}
+                                indice={indice}
+                                mostrarTecnologia
+                            />
                         ))}
                     </div>
 
@@ -113,7 +140,9 @@ export default function Home({
             <section className="bg-muted/50 border-y">
                 <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 md:grid-cols-2">
                     <div>
-                        <h2 className="text-2xl font-bold tracking-tight">La empresa</h2>
+                        <h2 className="text-2xl font-bold tracking-tight">
+                            La empresa
+                        </h2>
                         <div className="text-muted-foreground mt-4">
                             <DatoBloque
                                 valor={descripcionEmpresa}
@@ -135,10 +164,13 @@ export default function Home({
             </section>
 
             <section className="mx-auto max-w-6xl px-4 py-16">
-                <h2 className="text-2xl font-bold tracking-tight">Información legal</h2>
+                <h2 className="text-2xl font-bold tracking-tight">
+                    Información legal
+                </h2>
                 <p className="text-muted-foreground mt-2 max-w-2xl">
-                    Ponemos a disposición del público la documentación y las ligas oficiales que
-                    exige la normativa de telecomunicaciones.
+                    Ponemos a disposición del público la documentación y las
+                    ligas oficiales que exige la normativa de
+                    telecomunicaciones.
                 </p>
 
                 <div className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -150,10 +182,13 @@ export default function Home({
                             <FileText className="size-5" aria-hidden="true" />
                         </span>
                         <span>
-                            <span className="block font-semibold">Documentos legales</span>
+                            <span className="block font-semibold">
+                                Documentos legales
+                            </span>
                             <span className="text-muted-foreground text-sm">
-                                Permiso del IFT, código de prácticas comerciales, carta de derechos
-                                y demás documentos descargables en PDF.
+                                Permiso del IFT, código de prácticas
+                                comerciales, carta de derechos y demás
+                                documentos descargables en PDF.
                             </span>
                         </span>
                     </Link>
@@ -163,13 +198,19 @@ export default function Home({
                         className="vm-elevar bg-card hover:border-primary/50 flex items-start gap-4 rounded-2xl border p-6"
                     >
                         <span className="bg-primary/10 text-primary flex size-10 shrink-0 items-center justify-center rounded-xl">
-                            <ShieldCheck className="size-5" aria-hidden="true" />
+                            <ShieldCheck
+                                className="size-5"
+                                aria-hidden="true"
+                            />
                         </span>
                         <span>
-                            <span className="block font-semibold">Transparencia</span>
+                            <span className="block font-semibold">
+                                Transparencia
+                            </span>
                             <span className="text-muted-foreground text-sm">
-                                Visor de tarifas del IFT, lineamientos publicados en el DOF y folios
-                                de las tarifas registradas.
+                                Visor de tarifas del IFT, lineamientos
+                                publicados en el DOF y folios de las tarifas
+                                registradas.
                             </span>
                         </span>
                     </Link>

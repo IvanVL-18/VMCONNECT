@@ -45,21 +45,33 @@ export default function AdminDashboard({
             <div className="flex flex-col gap-6 p-4">
                 <div className="grid gap-4 sm:grid-cols-2">
                     {tarjetas.map((tarjeta) => (
-                        <div key={tarjeta.titulo} className="bg-card rounded-xl border p-6">
+                        <div
+                            key={tarjeta.titulo}
+                            className="bg-card rounded-xl border p-6"
+                        >
                             <div className="flex items-start justify-between gap-4">
                                 <div>
                                     <h2 className="text-muted-foreground text-sm font-medium">
                                         {tarjeta.titulo}
                                     </h2>
-                                    <p className="mt-2 text-2xl font-bold">{tarjeta.valor}</p>
+                                    <p className="mt-2 text-2xl font-bold">
+                                        {tarjeta.valor}
+                                    </p>
                                 </div>
                                 <tarjeta.icono
                                     className="text-muted-foreground size-5 shrink-0"
                                     aria-hidden="true"
                                 />
                             </div>
-                            <Button asChild variant="outline" size="sm" className="mt-4">
-                                <Link href={tarjeta.href}>{tarjeta.accion}</Link>
+                            <Button
+                                asChild
+                                variant="outline"
+                                size="sm"
+                                className="mt-4"
+                            >
+                                <Link href={tarjeta.href}>
+                                    {tarjeta.accion}
+                                </Link>
                             </Button>
                         </div>
                     ))}
@@ -76,8 +88,8 @@ export default function AdminDashboard({
 
                     {pendientes.length === 0 ? (
                         <p className="text-muted-foreground mt-3 text-sm">
-                            No hay pendientes: todos los documentos están cargados y la información
-                            está capturada.
+                            No hay pendientes: todos los documentos están
+                            cargados y la información está capturada.
                         </p>
                     ) : (
                         <ul className="mt-4 space-y-2">
@@ -95,7 +107,12 @@ export default function AdminDashboard({
                         </ul>
                     )}
 
-                    <Button asChild variant="outline" size="sm" className="mt-4">
+                    <Button
+                        asChild
+                        variant="outline"
+                        size="sm"
+                        className="mt-4"
+                    >
                         <Link href="/admin/configuracion">
                             <Settings className="size-4" aria-hidden="true" />
                             Editar configuración del sitio

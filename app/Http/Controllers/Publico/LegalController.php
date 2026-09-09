@@ -7,9 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Models\DocumentoLegal;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use Inertia\Inertia;
 use Inertia\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * Centro de descargas de los documentos legales (requisitos 1 al 8).

@@ -38,6 +38,7 @@ class SitioPublicoTest extends TestCase
     {
         Plan::create([
             'nombre' => 'Paquete de prueba',
+            'tecnologia' => 'fibra',
             'velocidad_bajada' => 100,
             'velocidad_subida' => 20,
             'precio_mensual' => 599.00,
@@ -53,13 +54,58 @@ class SitioPublicoTest extends TestCase
             ->assertOk()
             ->assertInertia(fn (AssertableInertia $page) => $page
                 ->component('publico/paquetes')
-                ->has('planes', 1)
-                ->where('planes.0.nombre', 'Paquete de prueba')
+                ->has('grupos', 1)
+                ->where('grupos.0.tecnologia', 'fibra')
+                ->has('grupos.0.planes', 1)
+                ->where('grupos.0.planes.0.nombre', 'Paquete de prueba')
                 // El precio viaja por JSON, así que se compara su valor
                 // numérico y no su tipo exacto.
-                ->where('planes.0.precio_mensual', fn ($precio) => (float) $precio === 599.0)
-                ->where('planes.0.restricciones', 'Sujeto a cobertura.')
-                ->where('planes.0.folio_tarifa', 'IFT-123')
+                ->where('grupos.0.planes.0.precio_mensual', fn ($precio) => (float) $precio === 599.0)
+                ->where('grupos.0.planes.0.restricciones', 'Sujeto a cobertura.')
+                ->where('grupos.0.planes.0.folio_tarifa', 'IFT-123')
+            );
+    }
+
+    /**
+     * Los nombres comerciales se repiten entre fibra y antena, así que el
+     * catálogo debe llegar separado por red y cada grupo con su propia nota de
+     * instalación: publicarlas juntas haría que una contradijera a la otra.
+     */
+    public function test_los_paquetes_se_agrupan_por_tecnologia(): void
+    {
+        Configuracion::actual()->update([
+            'planes_nota_fibra' => 'Sin costo de instalación.',
+            'planes_nota_antena' => 'Instalación con costo.',
+        ]);
+
+        Plan::create([
+            'nombre' => 'Básico',
+            'tecnologia' => 'fibra',
+            'velocidad_bajada' => 40,
+            'precio_mensual' => 250.00,
+            'activo' => true,
+            'orden' => 1,
+        ]);
+
+        Plan::create([
+            'nombre' => 'Básico',
+            'tecnologia' => 'antena',
+            'velocidad_bajada' => 10,
+            'precio_mensual' => 250.00,
+            'activo' => true,
+            'orden' => 1,
+        ]);
+
+        $this->get(route('paquetes'))
+            ->assertOk()
+            ->assertInertia(fn (AssertableInertia $page) => $page
+                ->has('grupos', 2)
+                ->where('grupos.0.tecnologia', 'fibra')
+                ->where('grupos.0.nota', 'Sin costo de instalación.')
+                ->where('grupos.0.planes.0.velocidad_bajada', 40)
+                ->where('grupos.1.tecnologia', 'antena')
+                ->where('grupos.1.nota', 'Instalación con costo.')
+                ->where('grupos.1.planes.0.velocidad_bajada', 10)
             );
     }
 
@@ -75,9 +121,10 @@ class SitioPublicoTest extends TestCase
             'orden' => 1,
         ]);
 
+        // Sin paquetes visibles no queda ninguna red que mostrar.
         $this->get(route('paquetes'))
             ->assertOk()
-            ->assertInertia(fn (AssertableInertia $page) => $page->has('planes', 0));
+            ->assertInertia(fn (AssertableInertia $page) => $page->has('grupos', 0));
     }
 
     /** Los datos del pie de página se comparten en todas las páginas. */

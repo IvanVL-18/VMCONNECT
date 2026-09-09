@@ -1,6 +1,15 @@
 import { Link, usePage } from '@inertiajs/react';
-import { Facebook, Instagram, Mail, MapPin, MessageCircle, Phone, Clock } from 'lucide-react';
+import {
+    Facebook,
+    Instagram,
+    Mail,
+    MapPin,
+    MessageCircle,
+    Phone,
+    Clock,
+} from 'lucide-react';
 import { Dato, ListaDatos } from '@/components/publico/dato';
+import { enlaceWhatsapp } from '@/lib/whatsapp';
 import type { PropsCompartidas } from '@/types/sitio';
 
 /**
@@ -19,7 +28,7 @@ export default function SiteFooter() {
         { url: sitio?.facebook_url, icono: Facebook, etiqueta: 'Facebook' },
         { url: sitio?.instagram_url, icono: Instagram, etiqueta: 'Instagram' },
         {
-            url: sitio?.whatsapp ? `https://wa.me/${sitio.whatsapp.replace(/\D/g, '')}` : null,
+            url: enlaceWhatsapp(sitio?.whatsapp),
             icono: MessageCircle,
             etiqueta: 'WhatsApp',
         },
@@ -49,21 +58,32 @@ export default function SiteFooter() {
                         </h2>
                         <ul className="space-y-2.5 text-sm">
                             <li className="flex gap-2">
-                                <MapPin className="text-muted-foreground mt-0.5 size-4 shrink-0" aria-hidden="true" />
+                                <MapPin
+                                    className="text-muted-foreground mt-0.5 size-4 shrink-0"
+                                    aria-hidden="true"
+                                />
                                 <span>
                                     <span className="sr-only">Domicilio: </span>
                                     <Dato valor={sitio?.domicilio_atencion} />
                                 </span>
                             </li>
                             <li className="flex gap-2">
-                                <Clock className="text-muted-foreground mt-0.5 size-4 shrink-0" aria-hidden="true" />
+                                <Clock
+                                    className="text-muted-foreground mt-0.5 size-4 shrink-0"
+                                    aria-hidden="true"
+                                />
                                 <span>
-                                    <span className="sr-only">Horario de oficina: </span>
+                                    <span className="sr-only">
+                                        Horario de oficina:{' '}
+                                    </span>
                                     <Dato valor={sitio?.horario_oficina} />
                                 </span>
                             </li>
                             <li className="flex gap-2">
-                                <Phone className="text-muted-foreground mt-0.5 size-4 shrink-0" aria-hidden="true" />
+                                <Phone
+                                    className="text-muted-foreground mt-0.5 size-4 shrink-0"
+                                    aria-hidden="true"
+                                />
                                 <span>
                                     <span className="sr-only">Teléfono: </span>
                                     <Dato valor={sitio?.telefono_atencion} />
@@ -78,16 +98,26 @@ export default function SiteFooter() {
                         </h2>
                         <ul className="space-y-2.5 text-sm">
                             <li className="flex gap-2">
-                                <Mail className="text-muted-foreground mt-0.5 size-4 shrink-0" aria-hidden="true" />
+                                <Mail
+                                    className="text-muted-foreground mt-0.5 size-4 shrink-0"
+                                    aria-hidden="true"
+                                />
                                 <span>
-                                    <span className="text-muted-foreground block text-xs">Atención a clientes</span>
+                                    <span className="text-muted-foreground block text-xs">
+                                        Atención a clientes
+                                    </span>
                                     <Dato valor={sitio?.correo_atencion} />
                                 </span>
                             </li>
                             <li className="flex gap-2">
-                                <Mail className="text-muted-foreground mt-0.5 size-4 shrink-0" aria-hidden="true" />
+                                <Mail
+                                    className="text-muted-foreground mt-0.5 size-4 shrink-0"
+                                    aria-hidden="true"
+                                />
                                 <span>
-                                    <span className="text-muted-foreground block text-xs">Facturación</span>
+                                    <span className="text-muted-foreground block text-xs">
+                                        Facturación
+                                    </span>
                                     <Dato valor={sitio?.correo_facturacion} />
                                 </span>
                             </li>
@@ -127,22 +157,36 @@ export default function SiteFooter() {
                         className="text-muted-foreground flex flex-wrap gap-x-5 gap-y-2 text-sm"
                         aria-label="Enlaces legales"
                     >
-                        <Link href="/legal" className="hover:text-foreground transition-colors">
+                        <Link
+                            href="/legal"
+                            className="hover:text-foreground transition-colors"
+                        >
                             Documentos legales
                         </Link>
-                        <Link href="/aviso-de-privacidad" className="hover:text-foreground transition-colors">
+                        <Link
+                            href="/aviso-de-privacidad"
+                            className="hover:text-foreground transition-colors"
+                        >
                             Aviso de privacidad
                         </Link>
-                        <Link href="/transparencia" className="hover:text-foreground transition-colors">
+                        <Link
+                            href="/transparencia"
+                            className="hover:text-foreground transition-colors"
+                        >
                             Transparencia
                         </Link>
-                        <Link href="/quejas" className="hover:text-foreground transition-colors">
+                        <Link
+                            href="/quejas"
+                            className="hover:text-foreground transition-colors"
+                        >
                             Quejas y atención
                         </Link>
                     </nav>
 
                     <p className="text-muted-foreground mt-4 text-xs">
-                        © {anio} <Dato valor={sitio?.marca_comercial} vacio="—" />. Todos los derechos reservados.
+                        © {anio}{' '}
+                        <Dato valor={sitio?.marca_comercial} vacio="—" />. Todos
+                        los derechos reservados.
                     </p>
                 </div>
             </div>

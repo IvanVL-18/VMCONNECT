@@ -37,8 +37,13 @@ export default function Transparencia({
 
                     <ul className="mt-4 space-y-4">
                         {enlaces.map((enlace) => (
-                            <li key={enlace.requisito} className="bg-card rounded-xl border p-5">
-                                <h3 className="font-semibold">{enlace.titulo}</h3>
+                            <li
+                                key={enlace.requisito}
+                                className="bg-card rounded-xl border p-5"
+                            >
+                                <h3 className="font-semibold">
+                                    {enlace.titulo}
+                                </h3>
                                 <p className="text-muted-foreground mt-1.5 text-sm">
                                     {enlace.descripcion}
                                 </p>
@@ -51,7 +56,10 @@ export default function Transparencia({
                                         className="text-primary mt-3 inline-flex items-center gap-1.5 text-sm font-medium break-all underline underline-offset-4"
                                     >
                                         {enlace.url}
-                                        <ExternalLink className="size-3.5 shrink-0" aria-hidden="true" />
+                                        <ExternalLink
+                                            className="size-3.5 shrink-0"
+                                            aria-hidden="true"
+                                        />
                                     </a>
                                 ) : (
                                     /* Se muestra explícitamente en lugar de
@@ -67,10 +75,12 @@ export default function Transparencia({
                 </section>
 
                 <section className="mt-12">
-                    <h2 className="text-xl font-semibold">Folios de tarifas registradas</h2>
+                    <h2 className="text-xl font-semibold">
+                        Folios de tarifas registradas
+                    </h2>
                     <p className="text-muted-foreground mt-2 text-sm">
-                        Folio con el que cada tarifa quedó inscrita en el Registro Público de
-                        Telecomunicaciones.
+                        Folio con el que cada tarifa quedó inscrita en el
+                        Registro Público de Telecomunicaciones.
                     </p>
 
                     {folios.length === 0 ? (
@@ -82,10 +92,16 @@ export default function Transparencia({
                             <table className="w-full text-sm">
                                 <thead className="bg-muted/50">
                                     <tr>
-                                        <th scope="col" className="px-4 py-3 text-left font-semibold">
+                                        <th
+                                            scope="col"
+                                            className="px-4 py-3 text-left font-semibold"
+                                        >
                                             Paquete
                                         </th>
-                                        <th scope="col" className="px-4 py-3 text-left font-semibold">
+                                        <th
+                                            scope="col"
+                                            className="px-4 py-3 text-left font-semibold"
+                                        >
                                             Folio de tarifa
                                         </th>
                                     </tr>
@@ -93,9 +109,13 @@ export default function Transparencia({
                                 <tbody>
                                     {folios.map((folio) => (
                                         <tr key={folio.id} className="border-t">
-                                            <td className="px-4 py-3">{folio.nombre}</td>
                                             <td className="px-4 py-3">
-                                                <Dato valor={folio.folio_tarifa} />
+                                                {folio.nombre}
+                                            </td>
+                                            <td className="px-4 py-3">
+                                                <Dato
+                                                    valor={folio.folio_tarifa}
+                                                />
                                             </td>
                                         </tr>
                                     ))}

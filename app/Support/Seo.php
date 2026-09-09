@@ -27,7 +27,7 @@ class Seo
         ],
         'paquetes' => [
             'titulo' => 'Paquetes y tarifas',
-            'descripcion' => 'Precios, velocidades de descarga y carga, características, restricciones y folios de tarifa registrados ante el IFT.',
+            'descripcion' => 'Paquetes de Internet por fibra óptica y por antena: precios, velocidades, características, restricciones y folios de tarifa registrados ante el IFT.',
         ],
         'contratacion' => [
             'titulo' => 'Contratación del servicio',
@@ -63,17 +63,6 @@ class Seo
      *
      * @return array{titulo: string|null, descripcion: string|null, canonica: string, indexable: bool}
      */
-    /**
-     * Indica si la peticion corresponde a una pagina del sitio publico.
-     *
-     * Lo usa HandleAppearance para servir el sitio publico siempre en claro,
-     * sin esperar a que React aplique el tema (eso provocaria un parpadeo).
-     */
-    public static function esPaginaPublica(Request $request): bool
-    {
-        return isset(self::PAGINAS[$request->route()?->getName()]);
-    }
-
     public static function paraPeticion(Request $request): array
     {
         $nombreRuta = $request->route()?->getName();
