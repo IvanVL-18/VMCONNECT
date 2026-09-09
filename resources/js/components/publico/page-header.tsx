@@ -24,7 +24,9 @@ export default function PageHeader({
                 {descripcion && (
                     <p
                         className="text-muted-foreground vm-entra mt-3 max-w-2xl text-base"
-                        style={{ '--vm-retraso': '80ms' } as React.CSSProperties}
+                        style={
+                            { '--vm-retraso': '80ms' } as React.CSSProperties
+                        }
                     >
                         {descripcion}
                     </p>

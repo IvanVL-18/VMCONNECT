@@ -11,7 +11,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('planes', function (Blueprint $table) {
-            // VM Connect entrega el servicio por dos redes distintas y los
+            // VM MAX entrega el servicio por dos redes distintas y los
             // nombres comerciales se repiten entre ambas, asi que la tecnologia
             // forma parte de la identidad del paquete.
             $table->string('tecnologia', 20)

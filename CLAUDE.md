@@ -1,23 +1,23 @@
-# VM Connect Web
+# VM MAX Web
 
 Sitio publico + panel administrativo de un ISP. Laravel 13 (PHP 8.3) con Inertia 3 + React 19
 y Tailwind 4. Se sirve con Herd en Windows.
 
 ## Comandos
 
-| Tarea | Comando |
-| --- | --- |
-| Dev (server + queue + vite) | `composer dev` |
-| Solo frontend | `npm run dev` |
-| Build | `npm run build` |
-| Suite completa (lint + phpstan + tests) | `composer test` |
-| Solo tests | `php artisan test` |
-| Un test | `php artisan test --filter=NombreDelTest` |
-| Formato PHP | `composer lint` (Pint) |
-| Analisis estatico | `composer types:check` (PHPStan/Larastan) |
-| Lint/format JS+TS | `npm run check` / `npm run check:fix` |
-| Tipos TS | `npm run types:check` |
-| Igual que CI | `composer ci:check` |
+| Tarea                                   | Comando                                   |
+| --------------------------------------- | ----------------------------------------- |
+| Dev (server + queue + vite)             | `composer dev`                            |
+| Solo frontend                           | `npm run dev`                             |
+| Build                                   | `npm run build`                           |
+| Suite completa (lint + phpstan + tests) | `composer test`                           |
+| Solo tests                              | `php artisan test`                        |
+| Un test                                 | `php artisan test --filter=NombreDelTest` |
+| Formato PHP                             | `composer lint` (Pint)                    |
+| Analisis estatico                       | `composer types:check` (PHPStan/Larastan) |
+| Lint/format JS+TS                       | `npm run check` / `npm run check:fix`     |
+| Tipos TS                                | `npm run types:check`                     |
+| Igual que CI                            | `composer ci:check`                       |
 
 CI (`.github/workflows/tests.yml`) corre el equivalente a `composer ci:check`, asi que eso es lo
 que debe pasar antes de dar por terminado un cambio.

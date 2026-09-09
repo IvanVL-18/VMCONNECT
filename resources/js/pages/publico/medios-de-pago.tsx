@@ -44,21 +44,36 @@ export default function MediosDePago({
                     <section className="bg-card rounded-2xl border p-6 sm:p-8">
                         <div className="flex flex-wrap items-center justify-between gap-6">
                             <div className="min-w-64 flex-1">
-                                <h2 className="text-xl font-semibold">Realiza tu pago por WhatsApp</h2>
+                                <h2 className="text-xl font-semibold">
+                                    Realiza tu pago por WhatsApp
+                                </h2>
                                 <p className="text-muted-foreground mt-2 text-sm">
-                                    Escríbenos y el área de atención a clientes te indica cómo
-                                    cubrir tu mensualidad y recibe tu comprobante.
+                                    Escríbenos y el área de atención a clientes
+                                    te indica cómo cubrir tu mensualidad y
+                                    recibe tu comprobante.
                                 </p>
                                 {sitio?.whatsapp && (
                                     <p className="text-muted-foreground mt-2 text-sm">
-                                        WhatsApp: <Dato valor={sitio.whatsapp} />
+                                        WhatsApp:{' '}
+                                        <Dato valor={sitio.whatsapp} />
                                     </p>
                                 )}
                             </div>
 
-                            <Button asChild size="lg" className="rounded-full px-6">
-                                <a href={whatsapp} target="_blank" rel="noreferrer noopener">
-                                    <MessageCircle className="size-5" aria-hidden="true" />
+                            <Button
+                                asChild
+                                size="lg"
+                                className="rounded-full px-6"
+                            >
+                                <a
+                                    href={whatsapp}
+                                    target="_blank"
+                                    rel="noreferrer noopener"
+                                >
+                                    <MessageCircle
+                                        className="size-5"
+                                        aria-hidden="true"
+                                    />
                                     Abrir WhatsApp
                                 </a>
                             </Button>
@@ -67,7 +82,9 @@ export default function MediosDePago({
                 )}
 
                 <section className={whatsapp ? 'mt-10' : ''}>
-                    <h2 className="text-xl font-semibold">Formas de pago aceptadas</h2>
+                    <h2 className="text-xl font-semibold">
+                        Formas de pago aceptadas
+                    </h2>
 
                     {medios.length === 0 ? (
                         <p className="text-muted-foreground mt-4 italic">
@@ -102,8 +119,9 @@ export default function MediosDePago({
 
                 {/* El sitio no procesa cobros: solo informa los medios de pago. */}
                 <p className="text-muted-foreground mt-8 text-sm">
-                    Este sitio no procesa pagos en línea ni solicita datos de tarjeta. Los pagos se
-                    realizan por los medios señalados arriba.
+                    Este sitio no procesa pagos en línea ni solicita datos de
+                    tarjeta. Los pagos se realizan por los medios señalados
+                    arriba.
                 </p>
             </div>
         </>

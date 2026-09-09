@@ -5,7 +5,10 @@
  * limpia todo lo que no sea dígito. Devuelve null cuando no hay número: quien
  * lo use debe ocultar el botón en lugar de generar una liga rota.
  */
-export function enlaceWhatsapp(numero: string | null | undefined, mensaje?: string): string | null {
+export function enlaceWhatsapp(
+    numero: string | null | undefined,
+    mensaje?: string,
+): string | null {
     const digitos = (numero ?? '').replace(/\D/g, '');
 
     if (digitos === '') {

@@ -39,7 +39,9 @@ export default function Quejas({
 
             <div className="mx-auto max-w-4xl px-4 py-12">
                 <section>
-                    <h2 className="text-xl font-semibold">Cómo presentar una queja</h2>
+                    <h2 className="text-xl font-semibold">
+                        Cómo presentar una queja
+                    </h2>
                     <div className="mt-3">
                         <DatoBloque
                             valor={procedimiento}
@@ -49,12 +51,20 @@ export default function Quejas({
                 </section>
 
                 <section className="mt-10">
-                    <h2 className="text-xl font-semibold">Canales de atención</h2>
+                    <h2 className="text-xl font-semibold">
+                        Canales de atención
+                    </h2>
                     <div className="mt-4 grid gap-4 sm:grid-cols-2">
                         {canales.map((canal) => (
-                            <div key={canal.etiqueta} className="bg-card rounded-xl border p-5">
+                            <div
+                                key={canal.etiqueta}
+                                className="bg-card rounded-xl border p-5"
+                            >
                                 <h3 className="text-muted-foreground flex items-center gap-2 text-xs font-semibold tracking-wide uppercase">
-                                    <canal.icono className="size-4" aria-hidden="true" />
+                                    <canal.icono
+                                        className="size-4"
+                                        aria-hidden="true"
+                                    />
                                     {canal.etiqueta}
                                 </h3>
                                 <div className="mt-2 text-sm">
@@ -66,7 +76,9 @@ export default function Quejas({
                 </section>
 
                 <section className="mt-10">
-                    <h2 className="text-xl font-semibold">Tiempos de resolución</h2>
+                    <h2 className="text-xl font-semibold">
+                        Tiempos de resolución
+                    </h2>
                     <div className="mt-4 grid gap-4 sm:grid-cols-2">
                         <div className="bg-card rounded-xl border p-5">
                             <h3 className="text-muted-foreground flex items-center gap-2 text-xs font-semibold tracking-wide uppercase">

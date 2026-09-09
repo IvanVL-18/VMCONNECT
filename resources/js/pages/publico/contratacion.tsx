@@ -48,7 +48,10 @@ export default function Contratacion({
                 <section className="mt-10 grid gap-4 sm:grid-cols-2">
                     <div className="bg-card rounded-xl border p-5">
                         <h2 className="flex items-center gap-2 font-semibold">
-                            <MapPin className="text-muted-foreground size-4" aria-hidden="true" />
+                            <MapPin
+                                className="text-muted-foreground size-4"
+                                aria-hidden="true"
+                            />
                             Lugar de contratación
                         </h2>
                         <div className="mt-2 text-sm">
@@ -58,7 +61,10 @@ export default function Contratacion({
 
                     <div className="bg-card rounded-xl border p-5">
                         <h2 className="flex items-center gap-2 font-semibold">
-                            <Clock className="text-muted-foreground size-4" aria-hidden="true" />
+                            <Clock
+                                className="text-muted-foreground size-4"
+                                aria-hidden="true"
+                            />
                             Horarios
                         </h2>
                         <div className="mt-2 text-sm">

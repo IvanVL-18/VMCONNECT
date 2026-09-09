@@ -3,29 +3,29 @@
 Checklist entregado por el despacho jurídico, con la ubicación exacta de su
 implementación. Sirve para auditar que no falte nada antes de publicar.
 
-**Leyenda de origen:** *Despacho* = lo entrega el despacho jurídico ·
-*Cliente* = lo captura el cliente desde el panel · *Fijo* = constante de
+**Leyenda de origen:** _Despacho_ = lo entrega el despacho jurídico ·
+_Cliente_ = lo captura el cliente desde el panel · _Fijo_ = constante de
 configuración.
 
-| No. | Requisito | Tipo | Dónde vive | Origen |
-|---|---|---|---|---|
-| 1 | Permiso del IFT (título de concesión) | PDF | `/legal` → `permiso_ift` | Despacho |
-| 2 | Formato de Información Simplificada | PDF | `/legal` → `formato_info_simplificada` | Despacho |
-| 3 | Oficio de Registro de contrato de adhesión (PROFECO) | PDF | `/legal` → `oficio_profeco` | Despacho |
-| 4 | Constancia de inscripción del oficio ante el IFT | PDF | `/legal` → `constancia_profeco_ift` | Despacho |
-| 5 | Código de Prácticas Comerciales | PDF | `/legal` → `codigo_practicas` | Despacho |
-| 6 | Aviso de Privacidad | PDF + página | `/aviso-de-privacidad` y `/legal` | Despacho |
-| 7 | Carta de Derechos Mínimos del Usuario | PDF | `/legal` → `carta_derechos` | Despacho |
-| 8 | Código de Ética | PDF | `/legal` → `codigo_etica` | Despacho |
-| 10 | Catálogo de trámites (servicios ofrecidos) | Página | Pie de página global + `/` | Cliente |
-| 11 | Medios de pago | Página | `/medios-de-pago` | Cliente |
-| 12 | Precios, tarifas, características y restricciones | Página | `/paquetes` (campo `restricciones`) | Cliente |
-| 13 | Folios de tarifas inscritas en el IFT | Página | `/paquetes` y `/transparencia` (campo `folio_tarifa`) | Cliente |
-| 14 | Liga del visor de tarifas | Enlace | `/transparencia` | Fijo |
-| 15 | Liga de lineamientos de calidad del servicio fijo | Enlace | `/transparencia` | Fijo |
-| 16 | Liga de lineamientos generales de publicación | Enlace | `/transparencia` | Fijo — **URL pendiente** |
-| 18 | Contratación del servicio | Página | `/contratacion` | Cliente |
-| 20 | Quejas | Página | `/quejas` | Cliente |
+| No. | Requisito                                            | Tipo         | Dónde vive                                            | Origen                   |
+| --- | ---------------------------------------------------- | ------------ | ----------------------------------------------------- | ------------------------ |
+| 1   | Permiso del IFT (título de concesión)                | PDF          | `/legal` → `permiso_ift`                              | Despacho                 |
+| 2   | Formato de Información Simplificada                  | PDF          | `/legal` → `formato_info_simplificada`                | Despacho                 |
+| 3   | Oficio de Registro de contrato de adhesión (PROFECO) | PDF          | `/legal` → `oficio_profeco`                           | Despacho                 |
+| 4   | Constancia de inscripción del oficio ante el IFT     | PDF          | `/legal` → `constancia_profeco_ift`                   | Despacho                 |
+| 5   | Código de Prácticas Comerciales                      | PDF          | `/legal` → `codigo_practicas`                         | Despacho                 |
+| 6   | Aviso de Privacidad                                  | PDF + página | `/aviso-de-privacidad` y `/legal`                     | Despacho                 |
+| 7   | Carta de Derechos Mínimos del Usuario                | PDF          | `/legal` → `carta_derechos`                           | Despacho                 |
+| 8   | Código de Ética                                      | PDF          | `/legal` → `codigo_etica`                             | Despacho                 |
+| 10  | Catálogo de trámites (servicios ofrecidos)           | Página       | Pie de página global + `/`                            | Cliente                  |
+| 11  | Medios de pago                                       | Página       | `/medios-de-pago`                                     | Cliente                  |
+| 12  | Precios, tarifas, características y restricciones    | Página       | `/paquetes` (campo `restricciones`)                   | Cliente                  |
+| 13  | Folios de tarifas inscritas en el IFT                | Página       | `/paquetes` y `/transparencia` (campo `folio_tarifa`) | Cliente                  |
+| 14  | Liga del visor de tarifas                            | Enlace       | `/transparencia`                                      | Fijo                     |
+| 15  | Liga de lineamientos de calidad del servicio fijo    | Enlace       | `/transparencia`                                      | Fijo                     |
+| 16  | Liga de lineamientos generales de publicación        | Enlace       | `/transparencia`                                      | Fijo — **URL pendiente** |
+| 18  | Contratación del servicio                            | Página       | `/contratacion`                                       | Cliente                  |
+| 20  | Quejas                                               | Página       | `/quejas`                                             | Cliente                  |
 
 **Datos adicionales obligatorios** (domicilio de atención, horario de oficina,
 correo de atención y de facturación, teléfono, marca comercial y servicios
@@ -34,9 +34,9 @@ vía Inertia desde `HandleInertiaRequests::datosDelSitio()`.
 
 ## Datos ya capturados
 
-Tomados del material comercial que VM Connect ya difunde:
+Tomados del material comercial que VM MAX ya difunde:
 
-- **Marca comercial:** VM Connect.
+- **Marca comercial:** VM MAX.
 - **Paquetes (req. 12):** Básico 10 Mbps $250 · Estándar 15 Mbps $300 · Premium
   20 Mbps $350 · Platino 30 Mbps $400.
 - **Nota de los paquetes:** instalación por antena $500, incluye el primer mes;
@@ -49,7 +49,7 @@ Tomados del material comercial que VM Connect ya difunde:
 1. **Requisito 16 sin URL.** El checklist del despacho no incluye la liga
    completa del DOF. Se pide al despacho y se captura en la variable de entorno
    `ISP_URL_LINEAMIENTOS_PUBLICACION`. Mientras esté vacía, `/transparencia`
-   muestra el enlace como *«pendiente de confirmar»* en lugar de ocultarlo, para
+   muestra el enlace como _«pendiente de confirmar»_ en lugar de ocultarlo, para
    que la omisión sea visible.
 
 2. **Numeración con huecos.** El checklist salta del 8 al 10, del 16 al 18 y del
@@ -80,11 +80,11 @@ Tomados del material comercial que VM Connect ya difunde:
 
 ## Dónde se administra cada cosa
 
-| Panel | Qué edita |
-|---|---|
-| `/admin/planes` | Paquetes: precio, velocidades, características, restricciones (req. 12) y folio de tarifa (req. 13) |
-| `/admin/documentos` | Sube y reemplaza los PDF de los requisitos 1 al 8 |
-| `/admin/configuracion` | Contacto, servicios (req. 10), medios de pago (req. 11), contratación (req. 18) y quejas (req. 20) |
+| Panel                  | Qué edita                                                                                           |
+| ---------------------- | --------------------------------------------------------------------------------------------------- |
+| `/admin/planes`        | Paquetes: precio, velocidades, características, restricciones (req. 12) y folio de tarifa (req. 13) |
+| `/admin/documentos`    | Sube y reemplaza los PDF de los requisitos 1 al 8                                                   |
+| `/admin/configuracion` | Contacto, servicios (req. 10), medios de pago (req. 11), contratación (req. 18) y quejas (req. 20)  |
 
 El panel muestra en su portada la lista de pendientes: documentos sin PDF,
 paquetes sin folio y campos de configuración que siguen con texto de ejemplo.

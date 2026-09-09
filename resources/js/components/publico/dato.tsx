@@ -22,7 +22,11 @@ export function Dato({
     className?: string;
 }) {
     if (!valor) {
-        return <span className={cn('text-muted-foreground italic', className)}>{vacio}</span>;
+        return (
+            <span className={cn('text-muted-foreground italic', className)}>
+                {vacio}
+            </span>
+        );
     }
 
     if (esPendiente(valor)) {
@@ -52,7 +56,11 @@ export function DatoBloque({
     className?: string;
 }) {
     if (!valor) {
-        return <p className={cn('text-muted-foreground italic', className)}>{vacio}</p>;
+        return (
+            <p className={cn('text-muted-foreground italic', className)}>
+                {vacio}
+            </p>
+        );
     }
 
     if (esPendiente(valor)) {
@@ -89,7 +97,10 @@ export function ListaDatos({
         <ul className={cn('space-y-2', className)}>
             {valores.map((valor, indice) => (
                 <li key={`${valor}-${indice}`} className="flex gap-2">
-                    <span aria-hidden="true" className="text-muted-foreground mt-0.5">
+                    <span
+                        aria-hidden="true"
+                        className="text-muted-foreground mt-0.5"
+                    >
                         •
                     </span>
                     <Dato valor={valor} />

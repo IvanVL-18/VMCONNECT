@@ -34,12 +34,19 @@ export default function SiteHeader() {
                     {/* El logo definitivo lo entrega el cliente; mientras tanto
                         se usa la marca comercial como identificador textual. */}
                     <span className="bg-primary text-primary-foreground flex size-8 shrink-0 items-center justify-center rounded-md text-sm font-bold">
-                        {(sitio?.marca_comercial ?? 'ISP').charAt(0).toUpperCase()}
+                        {(sitio?.marca_comercial ?? 'ISP')
+                            .charAt(0)
+                            .toUpperCase()}
                     </span>
-                    <span className="truncate">{sitio?.marca_comercial ?? 'Inicio'}</span>
+                    <span className="truncate">
+                        {sitio?.marca_comercial ?? 'Inicio'}
+                    </span>
                 </Link>
 
-                <nav className="hidden items-center gap-1 lg:flex" aria-label="Navegación principal">
+                <nav
+                    className="hidden items-center gap-1 lg:flex"
+                    aria-label="Navegación principal"
+                >
                     {NAVEGACION.map((item) => (
                         <Link
                             key={item.href}
@@ -50,7 +57,9 @@ export default function SiteHeader() {
                                     ? 'bg-accent text-accent-foreground font-medium'
                                     : 'text-muted-foreground hover:text-foreground hover:bg-accent/60',
                             )}
-                            aria-current={activo(item.href) ? 'page' : undefined}
+                            aria-current={
+                                activo(item.href) ? 'page' : undefined
+                            }
                         >
                             {item.titulo}
                         </Link>
@@ -66,7 +75,11 @@ export default function SiteHeader() {
                     aria-controls="menu-movil"
                     aria-label={abierto ? 'Cerrar menú' : 'Abrir menú'}
                 >
-                    {abierto ? <X className="size-5" /> : <Menu className="size-5" />}
+                    {abierto ? (
+                        <X className="size-5" />
+                    ) : (
+                        <Menu className="size-5" />
+                    )}
                 </Button>
             </div>
 
@@ -88,7 +101,9 @@ export default function SiteHeader() {
                                         ? 'bg-accent text-accent-foreground font-medium'
                                         : 'text-muted-foreground hover:text-foreground',
                                 )}
-                                aria-current={activo(item.href) ? 'page' : undefined}
+                                aria-current={
+                                    activo(item.href) ? 'page' : undefined
+                                }
                             >
                                 {item.titulo}
                             </Link>

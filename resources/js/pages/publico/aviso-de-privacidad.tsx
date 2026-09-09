@@ -11,7 +11,11 @@ type Documento = {
 };
 
 /** Requisito 6: aviso de privacidad como página y como PDF descargable. */
-export default function AvisoDePrivacidad({ documento }: { documento: Documento | null }) {
+export default function AvisoDePrivacidad({
+    documento,
+}: {
+    documento: Documento | null;
+}) {
     return (
         <>
             <Seo />
@@ -24,7 +28,9 @@ export default function AvisoDePrivacidad({ documento }: { documento: Documento 
             <div className="mx-auto max-w-4xl px-4 py-12">
                 {documento ? (
                     <div className="bg-card rounded-xl border p-6">
-                        <h2 className="text-lg font-semibold">{documento.titulo}</h2>
+                        <h2 className="text-lg font-semibold">
+                            {documento.titulo}
+                        </h2>
 
                         {documento.descripcion && (
                             <p className="text-muted-foreground mt-2 whitespace-pre-line">
@@ -35,14 +41,20 @@ export default function AvisoDePrivacidad({ documento }: { documento: Documento 
                         <div className="mt-6">
                             {documento.disponible ? (
                                 <Button asChild>
-                                    <a href={`/documentos/${documento.tipo}/descargar`}>
-                                        <Download className="size-4" aria-hidden="true" />
+                                    <a
+                                        href={`/documentos/${documento.tipo}/descargar`}
+                                    >
+                                        <Download
+                                            className="size-4"
+                                            aria-hidden="true"
+                                        />
                                         Descargar el aviso de privacidad (PDF)
                                     </a>
                                 </Button>
                             ) : (
                                 <p className="inline-block rounded border border-dashed border-amber-500/60 bg-amber-50 px-3 py-2 text-sm text-amber-800 dark:bg-amber-950/40 dark:text-amber-200">
-                                    El PDF del aviso de privacidad está pendiente de publicación.
+                                    El PDF del aviso de privacidad está
+                                    pendiente de publicación.
                                 </p>
                             )}
                         </div>

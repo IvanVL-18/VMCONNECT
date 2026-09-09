@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('planes', function (Blueprint $table) {
-            // El material comercial de VM Connect solo publica la velocidad de
+            // El material comercial de VM MAX solo publica la velocidad de
             // descarga ("hasta 10MB"). Inventar una velocidad de subida seria
             // publicar una caracteristica tecnica no sustentada, asi que el
             // campo pasa a ser opcional y la ficha solo lo muestra si existe.

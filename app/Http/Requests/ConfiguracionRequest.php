@@ -12,6 +12,12 @@ class ConfiguracionRequest extends FormRequest
         return true;
     }
 
+    /** Campos de red social: el formulario acepta pegar la URL sin esquema. */
+    private const URLS = [
+        'facebook_url',
+        'instagram_url',
+    ];
+
     /** Campos que el formulario manda como texto y se guardan como lista. */
     private const LISTAS = [
         'servicios_ofrecidos',
@@ -101,7 +107,11 @@ class ConfiguracionRequest extends FormRequest
         ];
     }
 
-    /** Los campos de lista llegan como texto con un elemento por linea. */
+    /**
+     * Normaliza lo que escribe el administrador antes de validarlo:
+     * los campos de lista llegan como texto con un elemento por linea y las
+     * URLs de redes sociales suelen pegarse sin esquema ("facebook.com/...").
+     */
     protected function prepareForValidation(): void
     {
         $normalizados = [];
@@ -118,6 +128,25 @@ class ConfiguracionRequest extends FormRequest
             }
 
             $normalizados[$campo] = $valor ?? [];
+        }
+
+        foreach (self::URLS as $campo) {
+            $valor = $this->input($campo);
+
+            if (! is_string($valor)) {
+                continue;
+            }
+
+            $valor = trim($valor);
+
+            // Sin esquema el validador `url` rechaza la direccion, y como el
+            // formulario guarda toda la configuracion de una sola vez, un
+            // Facebook mal pegado impedia guardar cualquier otro cambio.
+            if ($valor !== '' && ! preg_match('#^https?://#i', $valor)) {
+                $valor = 'https://'.ltrim($valor, '/');
+            }
+
+            $normalizados[$campo] = $valor === '' ? null : $valor;
         }
 
         $this->merge($normalizados);

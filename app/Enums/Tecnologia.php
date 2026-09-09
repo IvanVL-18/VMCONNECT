@@ -5,7 +5,7 @@ namespace App\Enums;
 /**
  * Tecnologia con la que se entrega el servicio de acceso a Internet.
  *
- * VM Connect opera dos redes distintas y cada una tiene su propio catalogo de
+ * VM MAX opera dos redes distintas y cada una tiene su propio catalogo de
  * paquetes, sus velocidades y sus condiciones de instalacion. Los nombres
  * comerciales se repiten entre ambas ("Básico", "Estándar", "Premium",
  * "Platino"), asi que la tecnologia es lo unico que distingue un paquete de

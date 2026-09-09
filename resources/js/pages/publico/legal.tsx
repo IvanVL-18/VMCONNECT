@@ -20,11 +20,17 @@ function formatoTamano(bytes: number | null): string | null {
 
     const mb = bytes / (1024 * 1024);
 
-    return mb >= 1 ? `${mb.toFixed(1)} MB` : `${Math.max(1, Math.round(bytes / 1024))} KB`;
+    return mb >= 1
+        ? `${mb.toFixed(1)} MB`
+        : `${Math.max(1, Math.round(bytes / 1024))} KB`;
 }
 
 /** Requisitos 1 al 8: centro de descargas de los documentos legales en PDF. */
-export default function Legal({ documentos }: { documentos: DocumentoLegal[] }) {
+export default function Legal({
+    documentos,
+}: {
+    documentos: DocumentoLegal[];
+}) {
     return (
         <>
             <Seo />
@@ -47,7 +53,9 @@ export default function Legal({ documentos }: { documentos: DocumentoLegal[] }) 
                                     aria-hidden="true"
                                 />
                                 <div className="min-w-0">
-                                    <h2 className="font-semibold">{documento.titulo}</h2>
+                                    <h2 className="font-semibold">
+                                        {documento.titulo}
+                                    </h2>
 
                                     {documento.descripcion && (
                                         <p className="text-muted-foreground mt-1 text-sm">
@@ -69,8 +77,13 @@ export default function Legal({ documentos }: { documentos: DocumentoLegal[] }) 
                                     <Button asChild variant="outline">
                                         {/* Descarga directa: enlace normal, no
                                             visita de Inertia. */}
-                                        <a href={`/documentos/${documento.tipo}/descargar`}>
-                                            <Download className="size-4" aria-hidden="true" />
+                                        <a
+                                            href={`/documentos/${documento.tipo}/descargar`}
+                                        >
+                                            <Download
+                                                className="size-4"
+                                                aria-hidden="true"
+                                            />
                                             Descargar
                                         </a>
                                     </Button>

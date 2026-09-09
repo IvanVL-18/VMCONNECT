@@ -48,7 +48,9 @@ export default function Paquetes({
 
             <div className="mx-auto max-w-6xl px-4 py-12">
                 {grupos.length === 0 ? (
-                    <p className="text-muted-foreground">Todavía no hay paquetes publicados.</p>
+                    <p className="text-muted-foreground">
+                        Todavía no hay paquetes publicados.
+                    </p>
                 ) : (
                     <>
                         {conPestanas && (
@@ -69,8 +71,12 @@ export default function Paquetes({
                                 }}
                             >
                                 {grupos.map((grupo) => {
-                                    const seleccionada = grupo.tecnologia === activa;
-                                    const Icono = grupo.tecnologia === 'fibra' ? Cable : Antenna;
+                                    const seleccionada =
+                                        grupo.tecnologia === activa;
+                                    const Icono =
+                                        grupo.tecnologia === 'fibra'
+                                            ? Cable
+                                            : Antenna;
 
                                     return (
                                         <button
@@ -81,7 +87,9 @@ export default function Paquetes({
                                             aria-selected={seleccionada}
                                             aria-controls={`panel-${grupo.tecnologia}`}
                                             tabIndex={seleccionada ? 0 : -1}
-                                            onClick={() => setActiva(grupo.tecnologia)}
+                                            onClick={() =>
+                                                setActiva(grupo.tecnologia)
+                                            }
                                             className={cn(
                                                 'focus-visible:ring-ring flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none',
                                                 seleccionada
@@ -89,7 +97,10 @@ export default function Paquetes({
                                                     : 'text-muted-foreground hover:text-foreground',
                                             )}
                                         >
-                                            <Icono className="size-4" aria-hidden="true" />
+                                            <Icono
+                                                className="size-4"
+                                                aria-hidden="true"
+                                            />
                                             {grupo.etiqueta}
                                         </button>
                                     );
@@ -103,9 +114,13 @@ export default function Paquetes({
                                 id={`panel-${grupo.tecnologia}`}
                                 role={conPestanas ? 'tabpanel' : undefined}
                                 aria-labelledby={
-                                    conPestanas ? `pestana-${grupo.tecnologia}` : undefined
+                                    conPestanas
+                                        ? `pestana-${grupo.tecnologia}`
+                                        : undefined
                                 }
-                                hidden={conPestanas && grupo.tecnologia !== activa}
+                                hidden={
+                                    conPestanas && grupo.tecnologia !== activa
+                                }
                                 className="mt-8"
                             >
                                 <h2 className="text-2xl font-bold tracking-tight">
@@ -156,10 +171,13 @@ export default function Paquetes({
 
                 {enlaceVisorTarifas && (
                     <div className="bg-muted/50 mt-6 rounded-2xl border p-6">
-                        <h2 className="font-semibold">Consulta pública de tarifas</h2>
+                        <h2 className="font-semibold">
+                            Consulta pública de tarifas
+                        </h2>
                         <p className="text-muted-foreground mt-2 text-sm">
-                            Las tarifas registradas pueden consultarse directamente en el visor del
-                            Instituto Federal de Telecomunicaciones.
+                            Las tarifas registradas pueden consultarse
+                            directamente en el visor del Instituto Federal de
+                            Telecomunicaciones.
                         </p>
                         <a
                             href={enlaceVisorTarifas}
@@ -168,7 +186,10 @@ export default function Paquetes({
                             className="text-primary mt-3 inline-flex items-center gap-1.5 text-sm font-medium underline underline-offset-4"
                         >
                             Abrir el visor de tarifas del IFT
-                            <ExternalLink className="size-3.5" aria-hidden="true" />
+                            <ExternalLink
+                                className="size-3.5"
+                                aria-hidden="true"
+                            />
                         </a>
                     </div>
                 )}

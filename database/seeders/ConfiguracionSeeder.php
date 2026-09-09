@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 /**
  * Configuracion del sitio.
  *
- * Se capturan los datos que VM Connect ya publica en su material comercial
+ * Se capturan los datos que VM MAX ya publica en su material comercial
  * (marca, medios de pago, notas de instalacion). Todo lo demas queda como
  * "[POR DEFINIR: ...]" a proposito: la normativa (PROFECO) sanciona la
  * publicidad enganosa, asi que ningun texto promocional ni dato de contacto se
@@ -21,13 +21,17 @@ class ConfiguracionSeeder extends Seeder
         $configuracion = Configuracion::query()->firstOrCreate([]);
 
         $configuracion->fill([
-            'marca_comercial' => 'VM Connect',
+            'marca_comercial' => 'VM MAX',
             'razon_social' => '[POR DEFINIR: razón social]',
             'domicilio_atencion' => '[POR DEFINIR: domicilio de la oficina de atención a clientes]',
             'horario_oficina' => '[POR DEFINIR: horario de oficina]',
             'telefono_atencion' => '[POR DEFINIR: teléfono]',
-            'correo_atencion' => '[POR DEFINIR: correo de atención]',
-            'correo_facturacion' => '[POR DEFINIR: correo de facturación]',
+            // Los campos de correo se quedan vacios y no con un marcador
+            // "[POR DEFINIR: ...]": el formulario los valida como correo, asi
+            // que un marcador de texto hace que toda la configuracion se
+            // rechace al guardar y nada mas se pueda editar hasta corregirlos.
+            'correo_atencion' => null,
+            'correo_facturacion' => null,
 
             'facebook_url' => null,
             'instagram_url' => null,
@@ -48,7 +52,6 @@ class ConfiguracionSeeder extends Seeder
             // atencion a clientes.
             'medios_pago' => [
                 'Pago por WhatsApp con el área de atención a clientes',
-                '[POR DEFINIR: agregar los demás medios de pago]',
             ],
             'medios_pago_nota' => 'Recuerda enviar tu comprobante de pago después de realizarlo.',
 
@@ -65,14 +68,14 @@ class ConfiguracionSeeder extends Seeder
             'quejas_procedimiento' => '[POR DEFINIR: describir cómo se presenta una queja]',
             'quejas_domicilio' => '[POR DEFINIR: domicilio para presentar quejas]',
             'quejas_telefono' => '[POR DEFINIR: teléfono de quejas]',
-            'quejas_correo' => '[POR DEFINIR: correo de quejas]',
+            'quejas_correo' => null,
             'quejas_horario' => '[POR DEFINIR: horario de atención de quejas]',
             'quejas_tiempo_promedio' => '[POR DEFINIR: tiempo promedio de resolución]',
             'quejas_tiempo_maximo' => '[POR DEFINIR: tiempo máximo de resolución]',
 
             // Textos del sitio publico. Solo se capturan los factuales; el resto
             // lo aprueba el cliente.
-            'home_titulo' => 'VM Connect',
+            'home_titulo' => 'VM MAX',
             'home_subtitulo' => 'Servicio de Internet fijo por fibra óptica y por antena.',
             'empresa_descripcion' => '[POR DEFINIR: descripción de la empresa]',
 

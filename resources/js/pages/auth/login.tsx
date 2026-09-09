@@ -76,8 +76,14 @@ export default function Login({ status, canResetPassword }: Props) {
                         </div>
 
                         <div className="flex items-center space-x-3">
-                            <Checkbox id="remember" name="remember" tabIndex={3} />
-                            <Label htmlFor="remember">Mantener la sesión iniciada</Label>
+                            <Checkbox
+                                id="remember"
+                                name="remember"
+                                tabIndex={3}
+                            />
+                            <Label htmlFor="remember">
+                                Mantener la sesión iniciada
+                            </Label>
                         </div>
 
                         <Button

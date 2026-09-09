@@ -7,7 +7,7 @@ use App\Models\Plan;
 use Illuminate\Database\Seeder;
 
 /**
- * Paquetes reales de VM Connect, tomados de su material comercial.
+ * Paquetes reales de VM MAX, tomados de su material comercial.
  *
  * La empresa opera dos redes y publica un catalogo por cada una. Los nombres
  * comerciales se repiten entre ambas ("Básico" existe en fibra a 40 Mbps y en

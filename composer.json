@@ -2,7 +2,7 @@
     "$schema": "https://getcomposer.org/schema.json",
     "name": "vm-connect/web",
     "type": "project",
-    "description": "VM Connect Web - sitio publico y panel administrativo.",
+    "description": "VM MAX Web - sitio publico y panel administrativo.",
     "keywords": [
         "laravel",
         "framework"
